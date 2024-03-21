@@ -2,8 +2,8 @@ const db = require("../configs/database");
 
 exports.insertCodeSubmission = async (req, res) => {
   try {
-    const { username, programming_language, stdin, code } = req.body;
-    if (!username || !programming_language || !stdin || !code) {
+    const { username, programming_language, stdin, code, token } = req.body;
+    if (!username || !programming_language || !stdin || !code || !token) {
       return res.status(400).json({
         success: false,
         message: "Please provide all required fields",
@@ -11,8 +11,8 @@ exports.insertCodeSubmission = async (req, res) => {
     }
     const connection = await db.getConnection();
     const results = await connection.query(
-      `INSERT INTO codeSubmission (username, programming_language, stdin, code) VALUES (?,?,?,?)`,
-      [username, programming_language, stdin, code]
+      `INSERT INTO codeSubmission (username, programming_language, stdin, code, token) VALUES (?,?,?,?,?)`,
+      [username, programming_language, stdin, code, token]
     );
     connection.release();
     return res.status(200).json({
