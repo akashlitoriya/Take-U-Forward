@@ -3,6 +3,7 @@ const db = require("../configs/database");
 exports.insertCodeSubmission = async (req, res) => {
   try {
     const { username, programming_language, stdin, code, token } = req.body;
+    console.log("INSERT CODE SUBMISSION");
     if (!username || !programming_language || !stdin || !code || !token) {
       return res.status(400).json({
         success: false,
@@ -27,6 +28,7 @@ exports.insertCodeSubmission = async (req, res) => {
 exports.getCodeSubmission = async (req, res) => {
   try {
     const connection = await db.getConnection();
+    console.log("GET CODE SUBMISSION");
     const [results] = await connection.query(`SELECT * FROM codeSubmission`);
     connection.release();
     return res.status(200).json({
